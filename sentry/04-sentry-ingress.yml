@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: sentry-ingress
+  namespace: monitoring
+  annotations:
+    kubernetes.io/ingress.class: traefik
+spec:
+  rules:
+  - host: your domain
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: sentry-web
+          servicePort: 9000

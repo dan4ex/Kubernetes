@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sentry-db
+  namespace: monitoring
+type: Opaque
+data:
+  POSTGRES_PASSWORD: cG9zdGdyZXM=
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: sentry-apps
+  namespace: monitoring
+type: Opaque
+data:
+  SENTRY_SECRET_KEY: N3Q2ZzI5amwtZ3N0eCYwdC12ZV9eLW1fcDlwPV80aXNrN2FjdGczX2tfN3RmYSV3cWw=
+  SENTRY_DB_PASSWORD: cG9zdGdyZXM=
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentry-db
+  namespace: monitoring
+  labels:
+    app: sentry-db
+    type: config
+data:
+  POSTGRES_USER: "postgres"
+  POSTGRES_DB: "sentry"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: sentry-apps
+  namespace: monitoring
+  labels:
+    app: sentry-apps
+    type: config
+data:
+  SENTRY_REDIS_HOST: "sentry-cache"
+  SENTRY_REDIS_PORT: "6379"
+  SENTRY_POSTGRES_HOST: "sentry-db"
+  SENTRY_POSTGRES_PORT: "5432"
+  SENTRY_DB_USER: "postgres"
+  SENTRY_DB_NAME: "sentry"
