@@ -35,6 +35,9 @@ spec:
         - name: admin
           containerPort: 8080
           hostPort: 8080
+        - name: https
+          containerPort: 443
+          hostPort: 443
         securityContext:
           capabilities:
             drop:
@@ -42,9 +45,21 @@ spec:
             add:
             - NET_BIND_SERVICE
         args:
-        - --api
-        - --kubernetes
-        - --logLevel=INFO
+        - "--api"
+        - "--kubernetes"
+        - "--logLevel=INFO"
+        - "--debug"
+        - "--defaultentrypoints=http,https"
+        - "--entrypoints=Name:http Address::80 Redirect.EntryPoint:https"
+        - "--entrypoints=Name:https Address::443 TLS"
+        - "--acme"
+        - "--acme.onhostrule"
+        - "--acme.entrypoint=https"
+        - "--acme.domains=traefik.surfstudio.ru"
+        - "--acme.email=dan4ex@yandex.ru"
+        - "--acme.storage=acme.json"
+        - "--acme.httpchallenge"
+        - "--acme.httpchallenge.entrypoint=http"
 ---
 kind: Service
 apiVersion: v1
@@ -61,3 +76,6 @@ spec:
     - protocol: TCP
       port: 8080
       name: admin
+    - protocol: TCP
+      port: 8080
+      name: https
