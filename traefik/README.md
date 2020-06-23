@@ -1,6 +1,10 @@
 # Easy deploy ingress traefik v1.7
 
-Change your domain name in file **03-traefik-ingress.yml** in **10 line** and just execute the command
+1. Change your domain name in file **03-traefik-ingress.yml** in **10 line**
+
+2. Change your domain name in file **02-traefik-deployment.yml** where **args** --*acme.domains*
+
+3. Run the command:
 
     $ kubectl apply -f .
 
