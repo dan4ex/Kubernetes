@@ -1,8 +1,8 @@
 # Prometheus operator production ready
 
-**This example for deploy to GKE**
-
-It is assumed that tools **Helm** is already installed in your local computer
+Requirements:
+  - **GKE**
+  - **Helm** is already installed in your local computer
 
 ## 1. Install Tiller
 ```
