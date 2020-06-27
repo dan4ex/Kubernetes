@@ -1,0 +1,17 @@
+prometheus:
+  prometheusSpec:
+    storageSpec:
+      volumeClaimTemplate:
+        spec:
+          accessModes: ["ReadWriteOnce"]
+          resources:
+            requests:
+              storage: 5Gi
+          storageClassName: ssd
+    retention: 30d
+grafana:
+  adminPassword: admin
+  persistence:
+    enabled: true
+    size: 1Gi
+    existingClaim: "grafana-pvc"
