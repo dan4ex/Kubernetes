@@ -15,6 +15,6 @@ a) Create StorageClass ssd, namespace monitoring and persistent volume claim for
 
 b) Deploy prometheus operator to your cluster using **Helm**:
     
-    $ helm install stable/prometheus-operator --namespace monitoring -f prometheus-operator-values.yml
+    $ helm install stable/prometheus-operator --namespace monitoring -f values/prometheus-operator-values.yml
     
 **Ready!** Just open local port ```$ kubectl port-forward service/<your-name-grafana> 8080:80 -n monitoring``` and go http://localhost:8080/
