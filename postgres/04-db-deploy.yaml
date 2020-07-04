@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: db
+  namespace: app
+  labels:
+    app: db
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: db
+  replicas: 1
+  template:
+    metadata:
+        labels:
+          app: db
+    spec:
+      containers:
+        - name: db
+          image: postgres:11
+          imagePullPolicy: Always
+          ports:
+          - containerPort: 5432
+          envFrom:
+            - secretRef:
+                name: postgres
+          volumeMounts:
+            - mountPath: /var/lib/postgresql/data
+              name: db
+      volumes:
+        - name: db
+          persistentVolumeClaim:
+            claimName: db-pvc
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: db
+  namespace: app
+spec:
+  type: ClusterIP
+  selector:
+    app: db
+  ports:
+  - port: 5432
+    targetPort: 5432
