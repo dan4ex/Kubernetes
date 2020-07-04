@@ -1,4 +1,4 @@
-# Example deploy postgresql dor bare-metal kubernetes cluster
+# Example deploy postgresql for bare-metal kubernetes cluster
 
 Requirements:
   - docker kubeadm kubelet kubectl are already install on your bare-metal machine 
