@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    release: wobbling-fox #Use value from your prometheus-operator release
+  name: nginx-exporter
+  namespace: monitoring
+spec:
+  endpoints:
+  - targetPort: http
+  jobLabel: nginx-exporter
+  namespaceSelector:
+    matchNames:
+    - monitoring
+  selector:
+    matchLabels:
+      app: nginx-exporter-service

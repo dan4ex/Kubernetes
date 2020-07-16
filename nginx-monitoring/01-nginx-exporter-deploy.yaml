@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-exporter
+  namespace: monitoring
+  labels:
+    app: nginx-exporter
+spec:
+  selector:
+    matchLabels:
+      app: nginx-exporter
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: nginx-exporter
+    spec:
+      containers:
+        - name: nginx-exporter
+          image: nginx/nginx-prometheus-exporter:0.8.0
+          args:
+          - --nginx.scrape-uri=http://your_domain/stub_status/
+          ports:
+          - containerPort: 9113
+            name: http
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-exporter-service
+  namespace: monitoring
+  labels:
+    app: nginx-exporter-service
+spec:
+  type: ClusterIP
+  selector:
+    app: nginx-exporter
+  ports:
+  - name: http
+    port: 80
+    targetPort: 9113
